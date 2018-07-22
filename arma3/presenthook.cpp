@@ -4,6 +4,7 @@ using PresentType = long(__stdcall*)(IDXGISwapChain*, UINT, UINT);
 PresentType original_function;
 
 World* world = nullptr;
+NetworkManager* networkmanager = nullptr;
 
 long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 {
@@ -53,8 +54,25 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 				//if (GetAsyncKeyState(VK_RBUTTON))
 					//world->GetlocalPlayer()->obj->GetFutureVisualState()->pos = vs->pos;
+				if (GetAsyncKeyState(VK_RBUTTON))
+				{
+					float mass = 100.f;
+					Vector location = vs->origin;
+					Vector targetLocation(location.x, location.y + 100, location.z);
+					Vector difference = location - targetLocation;
+					D3DXVECTOR3 d3dDifference(difference.x, difference.y, difference.z);
+					D3DXVECTOR3 normalizedDifference;
+					D3DXVec3Normalize(&normalizedDifference, &d3dDifference);
 
+					normalizedDifference *= mass;
+					normalizedDifference *= 1000; // meterspersecond
+
+					networkmanager->AskForAddImpulse(entity, new D3DXVECTOR3(normalizedDifference.x, normalizedDifference.y, normalizedDifference.z), 0);
+				}
 				//vs->pos = Vector(0, 0, 0);
+
+				//test
+				networkmanager->SetVisibilityMessage(entity, false);
 
 				Camera* camera = world->GetCamera();
 				if (!camera)
@@ -91,6 +109,10 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 				Vector screen;
 				if(camera->WorldToScreen(vs->origin, screen))
 					renderer->DrawString(12, screen.x, screen.y, Color(255, 255, 255, 255), obj->GetObjectType()->type1->GetValue(), true);
+
+				
+					
+				
 			}
 		}
 	}
@@ -105,8 +127,9 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 bool PresentHook::Init()
 {
-	world = *(World**)((DWORD64)GetModuleHandle(0) + 0x2553F48);
-	printf(std::to_string((DWORD64)world).c_str());
+	world = *reinterpret_cast<World**>(reinterpret_cast<DWORD64>(GetModuleHandle(0)) + 0x2553F48);
+	networkmanager = *reinterpret_cast<NetworkManager**>(reinterpret_cast<DWORD64>(GetModuleHandle(0)) + 0x2512170);
+	printf(std::to_string(reinterpret_cast<DWORD64>(world)).c_str());
 	if (!world)
 		return false;
 
@@ -115,7 +138,7 @@ bool PresentHook::Init()
 		return false;
 
 	Hook* hook = new Hook(engine->swapchain, 8, &Present);
-	original_function = (PresentType)hook->ReplaceVirtual();
+	original_function = static_cast<PresentType>(hook->ReplaceVirtual());
 
 	return true;
 }
