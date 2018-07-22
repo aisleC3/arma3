@@ -51,4 +51,5 @@ public:
 #include "interfaces.h"
 #include "entities.h"
 #include "aimbot.h"
+#include "esp.h"
 #include "presenthook.h"

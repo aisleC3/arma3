@@ -48,6 +48,7 @@
     <ClCompile Include="dx11renderer\FW1FontWrapper\FW1FontWrapper.cpp" />
     <ClCompile Include="dx11renderer\FW1FontWrapper\FW1Precompiled.cpp" />
     <ClCompile Include="entities.cpp" />
+    <ClCompile Include="esp.cpp" />
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="presenthook.cpp" />
@@ -75,6 +76,7 @@
     <ClInclude Include="dx11renderer\FW1FontWrapper\FW1Precompiled.h" />
     <ClInclude Include="dx11renderer\Helper.h" />
     <ClInclude Include="entities.h" />
+    <ClInclude Include="esp.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="interfaces.h" />
     <ClInclude Include="presenthook.h" />

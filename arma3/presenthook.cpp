@@ -14,31 +14,18 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 	renderer->BeginScene();
 
+	//if (GetAsyncKeyState(VK_RBUTTON))
+	//world->GetlocalPlayer()->obj->GetFutureVisualState()->pos = vs->pos;
+
 	entities.StoreEntities();
 
 	for (auto player : entities.GetPlayers())
 	{
+		if (!player)
+			continue;
+
+		esp.Frame(renderer, player);
 		aimbot.Frame(renderer, player);
-
-		VisualState* vs = player->GetRenderVisualState();
-		if (!vs)
-			continue;
-
-		if (vs->origin == Vector(0, 0, 0))
-			continue;
-
-		//if (GetAsyncKeyState(VK_RBUTTON))
-		//world->GetlocalPlayer()->obj->GetFutureVisualState()->pos = vs->pos;
-
-		//vs->pos = Vector(0, 0, 0);
-
-		Camera* camera = ints.world->GetCamera();
-		if (!camera)
-			continue;
-
-		Vector screen;
-		if (camera->WorldToScreen(vs->origin, screen))
-			renderer->DrawString(12, screen.x, screen.y, Color(255, 255, 255, 255), player->GetObjectType()->type1->GetValue(), true);
 	}
 
 	entities.ClearEntities();

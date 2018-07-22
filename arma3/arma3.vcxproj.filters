@@ -120,6 +120,9 @@
     <ClCompile Include="entities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="esp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arma3.h">
@@ -222,6 +225,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="entities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="esp.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
