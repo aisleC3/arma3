@@ -111,6 +111,15 @@
     <ClCompile Include="dx11renderer\FW1FontWrapper\CFW1GlyphVertexDrawerInterface.cpp">
       <Filter>Resource Files\dx11renderer\FW1FontWrapper</Filter>
     </ClCompile>
+    <ClCompile Include="interfaces.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="aimbot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="entities.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arma3.h">
@@ -205,6 +214,15 @@
     </ClInclude>
     <ClInclude Include="sdk\gun.h">
       <Filter>Header Files\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="interfaces.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="aimbot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="entities.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

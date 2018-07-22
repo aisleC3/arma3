@@ -1,9 +1,7 @@
-#include "presenthook.h"
+#include "arma3.h"
 
 using PresentType = long(__stdcall*)(IDXGISwapChain*, UINT, UINT);
 PresentType original_function;
-
-World* world = nullptr;
 
 long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 {
@@ -16,87 +14,34 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 	renderer->BeginScene();
 
-	if (world)
+	entities.StoreEntities();
+
+	for (auto player : entities.GetPlayers())
 	{
-		EntityTable* nearents = world->GetNearEnts();
-		if (nearents)
-		{
-			for (int i = 0; i < world->NearEntsSize(); i++)
-			{
-				Entity* entity = nearents->GetEntityFromIndex(i);
-				if (!entity)
-					continue;
+		aimbot.Frame(renderer, player);
 
-				EntityLink* link = entity->link;
-				if (!link)
-					continue;
+		VisualState* vs = player->GetRenderVisualState();
+		if (!vs)
+			continue;
 
-				if (world->GetlocalPlayer() == link)
-					continue;
+		if (vs->origin == Vector(0, 0, 0))
+			continue;
 
-				Object* obj = link->obj;
-				if (!obj)
-					continue;
+		//if (GetAsyncKeyState(VK_RBUTTON))
+		//world->GetlocalPlayer()->obj->GetFutureVisualState()->pos = vs->pos;
 
-				if (obj->GetObjectType()->type1->GetValue() == "Ground")
-					continue;
+		//vs->pos = Vector(0, 0, 0);
 
-				if (obj->IsDead())
-					continue;
+		Camera* camera = ints.world->GetCamera();
+		if (!camera)
+			continue;
 
-				VisualState* vs = obj->GetRenderVisualState();
-				if (!vs)
-					continue;
-
-				if (vs->origin == Vector(0, 0, 0))
-					continue;
-
-				//if (GetAsyncKeyState(VK_RBUTTON))
-					//world->GetlocalPlayer()->obj->GetFutureVisualState()->pos = vs->pos;
-
-				//vs->pos = Vector(0, 0, 0);
-
-				Camera* camera = world->GetCamera();
-				if (!camera)
-					continue;
-
-				EntityTable* bullets = world->GetBullets();
-				for (int i = 0; i < world->BulletsSize(); i++)
-				{
-					Entity* bullet_entity = bullets->GetEntityFromIndex(i);
-					if (!bullet_entity)
-						continue;
-
-					EntityLink* bullet_link = bullet_entity->link;
-					if (!bullet_link)
-						continue;
-
-					Object* bullet_obj = bullet_link->obj;
-					if (!bullet_obj)
-						continue;
-
-					VisualState* bullet_vs = bullet_obj->GetFutureVisualState();
-					if (!bullet_vs)
-						continue;
-
-					bullet_vs->origin = vs->head;
-
-					Vector screen;
-					if (camera->WorldToScreen(bullet_vs->origin, screen))
-						renderer->DrawString(12, screen.x, screen.y, Color(255, 255, 255, 255), "Bullet", true);
-
-					break;
-				}
-
-				Vector screen;
-				if(camera->WorldToScreen(vs->origin, screen))
-					renderer->DrawString(12, screen.x, screen.y, Color(255, 255, 255, 255), obj->GetObjectType()->type1->GetValue(), true);
-			}
-		}
+		Vector screen;
+		if (camera->WorldToScreen(vs->origin, screen))
+			renderer->DrawString(12, screen.x, screen.y, Color(255, 255, 255, 255), player->GetObjectType()->type1->GetValue(), true);
 	}
 
-	renderer->FillRect(40, 40, 350, 400, Color(80, 80, 80, 150));
-	renderer->DrawString(12, 42, 41, Color(255, 255, 255, 255), "Menu", true);
+	entities.ClearEntities();
 
 	renderer->EndScene();
 
@@ -105,12 +50,7 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 bool PresentHook::Init()
 {
-	world = *(World**)((DWORD64)GetModuleHandle(0) + 0x2553F48);
-	printf(std::to_string((DWORD64)world).c_str());
-	if (!world)
-		return false;
-
-	EngineDD11* engine = world->GetEngine();
+	EngineDD11* engine = ints.world->GetEngine();
 	if (!engine)
 		return false;
 

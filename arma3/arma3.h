@@ -19,6 +19,9 @@
 #include <clocale>
 #include <algorithm>
 
+//lib
+#include "dx11renderer\D3D11Renderer.h"
+
 class Vector
 {
 public:
@@ -43,3 +46,9 @@ public:
 #include "sdk\world.h"
 #include "sdk\net.h"
 #include "sdk\script.h"
+
+//cheat
+#include "interfaces.h"
+#include "entities.h"
+#include "aimbot.h"
+#include "presenthook.h"
