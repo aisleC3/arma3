@@ -22,15 +22,13 @@ void Entities::StoreEntities()
 			if (!obj)
 				continue;
 
-			printf(std::string(std::to_string((DWORD64)obj) + "\n").c_str());
+			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "infantry"))
+			{
+				if (obj->IsDead())
+					continue;
 
-			if (obj->GetObjectType()->type1->GetValue() == "Ground")
-				continue;
-
-			if (obj->IsDead())
-				continue;
-
-			players.push_back(obj);
+				players.push_back(obj);
+			}
 		}
 	}
 }

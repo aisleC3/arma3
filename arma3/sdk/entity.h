@@ -45,6 +45,11 @@ public:
 	{
 		return *(bool*)(this + 0x504);
 	}
+
+	bool GetNetID()
+	{
+		return *(int*)(this + 0xB94);
+	}
 };
 
 class EntityLink

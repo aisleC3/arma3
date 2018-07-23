@@ -22,6 +22,12 @@
     <Filter Include="Header Files\sdk">
       <UniqueIdentifier>{6b2736bf-0480-4a1c-a1c8-3ac954ac81b1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\features">
+      <UniqueIdentifier>{de4c8547-fd59-4468-b1da-2c888ae832e4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\features">
+      <UniqueIdentifier>{c5dab40a-94e3-461c-b305-2122a7ed7826}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -114,14 +120,14 @@
     <ClCompile Include="interfaces.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="aimbot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="entities.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="aimbot.cpp">
+      <Filter>Source Files\features</Filter>
+    </ClCompile>
     <ClCompile Include="esp.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\features</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -221,14 +227,14 @@
     <ClInclude Include="interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="aimbot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="entities.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="aimbot.h">
+      <Filter>Header Files\features</Filter>
+    </ClInclude>
     <ClInclude Include="esp.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\features</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

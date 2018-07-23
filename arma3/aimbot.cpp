@@ -5,7 +5,7 @@ void Aimbot::Frame(D3D11Renderer* renderer, Object* player)
 	EntityTable* bullets = ints.world->GetBullets();
 	static int size;
 
-	if (size < ints.world->BulletsSize())
+	if (bullets && (size < ints.world->BulletsSize()))
 	{
 		for (int i = 0; i < ints.world->BulletsSize(); i++)
 		{

@@ -19,7 +19,7 @@
 #include <clocale>
 #include <algorithm>
 
-//lib
+// lib
 #include "dx11renderer\D3D11Renderer.h"
 
 class Vector
@@ -47,7 +47,7 @@ public:
 #include "sdk\net.h"
 #include "sdk\script.h"
 
-//cheat
+// cheat
 #include "interfaces.h"
 #include "entities.h"
 #include "aimbot.h"
