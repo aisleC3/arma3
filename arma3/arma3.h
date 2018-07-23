@@ -52,4 +52,5 @@ public:
 #include "entities.h"
 #include "aimbot.h"
 #include "esp.h"
+#include "misc.h"
 #include "presenthook.h"

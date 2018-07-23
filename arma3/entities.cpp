@@ -31,6 +31,36 @@ void Entities::StoreEntities()
 			}
 		}
 	}
+
+	EntityTable* farents = ints.world->GetFarEnts();
+	if (farents)
+	{
+		for (int i = 0; i < ints.world->FarEntsSize(); i++)
+		{
+			Entity* entity = farents->GetEntityFromIndex(i);
+			if (!entity)
+				continue;
+
+			EntityLink* link = entity->link;
+			if (!link)
+				continue;
+
+			if (ints.world->GetlocalPlayer() == link)
+				continue;
+
+			Object* obj = link->obj;
+			if (!obj)
+				continue;
+
+			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "infantry"))
+			{
+				if (obj->IsDead())
+					continue;
+
+				players.push_back(obj);
+			}
+		}
+	}
 }
 
 void Entities::ClearEntities()

@@ -129,6 +129,9 @@
     <ClCompile Include="esp.cpp">
       <Filter>Source Files\features</Filter>
     </ClCompile>
+    <ClCompile Include="misc.cpp">
+      <Filter>Source Files\features</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arma3.h">
@@ -234,6 +237,9 @@
       <Filter>Header Files\features</Filter>
     </ClInclude>
     <ClInclude Include="esp.h">
+      <Filter>Header Files\features</Filter>
+    </ClInclude>
+    <ClInclude Include="misc.h">
       <Filter>Header Files\features</Filter>
     </ClInclude>
   </ItemGroup>

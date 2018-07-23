@@ -33,6 +33,36 @@ public:
 		return *(int*)(this + 0x16C0);
 	}
 
+	EntityTable* GetFarEnts()
+	{
+		return *(EntityTable**)(this + 0x1780);
+	}
+
+	int FarEntsSize()
+	{
+		return *(int*)(this + 0x1788);
+	}
+
+	EntityTable* GetFarFarEnts()
+	{
+		return *(EntityTable**)(this + 0x1848);
+	}
+
+	int NearFarFarSize()
+	{
+		return *(int*)(this + 0x1850);
+	}
+
+	EntityTable* GetFarFarFarEnts()
+	{
+		return *(EntityTable**)(this + 0x1910);
+	}
+
+	int NearFarFarFarSize()
+	{
+		return *(int*)(this + 0x1918);
+	}
+
 	EntityLink* GetlocalPlayer()
 	{
 		return *(EntityLink**)(this + 0x26A8);
