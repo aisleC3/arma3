@@ -29,6 +29,13 @@ void Entities::StoreEntities()
 
 				players.push_back(obj);
 			}
+			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "vehicle") || strstr(obj->GetObjectType()->type3->GetValue().c_str(), "air"))
+			{
+				if (obj->IsDead())
+					continue;
+
+				vehicles.push_back(obj);
+			}
 		}
 	}
 
@@ -59,6 +66,14 @@ void Entities::StoreEntities()
 
 				players.push_back(obj);
 			}
+
+			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "vehicle") || strstr(obj->GetObjectType()->type3->GetValue().c_str(), "air"))
+			{
+				if (obj->IsDead())
+					continue;
+
+				vehicles.push_back(obj);
+			}
 		}
 	}
 }
@@ -66,11 +81,18 @@ void Entities::StoreEntities()
 void Entities::ClearEntities()
 {
 	players.clear();
+	vehicles.clear();
 }
 
 std::vector<Object*> Entities::GetPlayers()
 {
 	return players;
 }
+
+std::vector<Object*> Entities::GetVehicles()
+{
+	return vehicles;
+}
+
 
 Entities entities;

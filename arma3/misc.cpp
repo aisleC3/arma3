@@ -2,7 +2,7 @@
 
 void Misc::ImpulseAll(Object* player)
 {
-	ints.network_manager->AddImpulse(player, new Vector(100, 1000, 100), new Vector(1, 1, 1));
+	ints.network_manager->AddImpulse(player, new Vector(100000, 100000, 100000), new Vector(100, 100000, 100));
 }
 
 void Misc::Frame(D3D11Renderer* renderer, Object* player)

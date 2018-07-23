@@ -2,10 +2,10 @@
 
 void Init()
 {
-	AllocConsole();
+	/*AllocConsole();
 	freopen("CONIN$", "r", stdin);
 	freopen("CONOUT$", "w", stdout);
-	freopen("CONOUT$", "w", stderr);
+	freopen("CONOUT$", "w", stderr);*/
 
 	if(!ints.Init())
 		MessageBoxA(NULL, "Interfaces: Failed to init.", NULL, NULL);

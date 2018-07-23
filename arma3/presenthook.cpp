@@ -24,11 +24,18 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 		if (!player)
 			continue;
 
-		
-		
 		esp.Frame(renderer, player);
 		aimbot.Frame(renderer, player);
 		misc.Frame(renderer, player);
+	}
+
+	for(auto vehicle : entities.GetVehicles())
+	{
+		if (!vehicle)
+			continue;
+
+		esp.Frame(renderer, vehicle);
+		misc.Frame(renderer, vehicle);
 	}
 
 	entities.ClearEntities();
