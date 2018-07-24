@@ -30,10 +30,12 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 		esp.Frame(renderer, obj);
 
-		if (container->GetType() == unit)
+		Type type = container->GetType();
+
+		if (type == unit)
 			aimbot.Frame(renderer, obj);
 
-		if (container->GetType() == (unit || vehicle))
+		if ((type == unit) || (type == vehicle))
 			misc.Frame(renderer, obj);
 	}
 
