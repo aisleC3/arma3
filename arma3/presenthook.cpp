@@ -19,23 +19,22 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 	entities.StoreEntities();
 
-	for (auto player : entities.GetPlayers())
+	for (auto container : entities.GetObjects())
 	{
-		if (!player)
+		if (!container)
 			continue;
 
-		esp.Frame(renderer, player);
-		aimbot.Frame(renderer, player);
-		misc.Frame(renderer, player);
-	}
-
-	for(auto vehicle : entities.GetVehicles())
-	{
-		if (!vehicle)
+		Object* obj = container->GetPointer();
+		if (!obj)
 			continue;
 
-		esp.Frame(renderer, vehicle);
-		misc.Frame(renderer, vehicle);
+		esp.Frame(renderer, obj);
+
+		if (container->GetType() == unit)
+			aimbot.Frame(renderer, obj);
+
+		if (container->GetType() == (unit || vehicle))
+			misc.Frame(renderer, obj);
 	}
 
 	entities.ClearEntities();

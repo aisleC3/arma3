@@ -51,6 +51,7 @@
     <ClCompile Include="esp.cpp" />
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="misc.cpp" />
     <ClCompile Include="presenthook.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -79,6 +80,7 @@
     <ClInclude Include="esp.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="interfaces.h" />
+    <ClInclude Include="misc.h" />
     <ClInclude Include="presenthook.h" />
     <ClInclude Include="arma3.h" />
     <ClInclude Include="sdk\camera.h" />

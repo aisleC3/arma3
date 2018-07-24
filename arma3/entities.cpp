@@ -1,98 +1,71 @@
 #include "arma3.h"
 
+std::vector<Entity*> ents;
+
 void Entities::StoreEntities()
 {
 	EntityTable* nearents = ints.world->GetNearEnts();
-	if (nearents)
+	EntityTable* farents = ints.world->GetFarEnts();
+	if (nearents && farents)
 	{
 		for (int i = 0; i < ints.world->NearEntsSize(); i++)
 		{
 			Entity* entity = nearents->GetEntityFromIndex(i);
-			if (!entity)
-				continue;
-
-			EntityLink* link = entity->link;
-			if (!link)
-				continue;
-
-			if (ints.world->GetlocalPlayer() == link)
-				continue;
-
-			Object* obj = link->obj;
-			if (!obj)
-				continue;
-
-			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "infantry"))
-			{
-				if (obj->IsDead())
-					continue;
-
-				players.push_back(obj);
-			}
-			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "vehicle") || strstr(obj->GetObjectType()->type3->GetValue().c_str(), "air"))
-			{
-				if (obj->IsDead())
-					continue;
-
-				vehicles.push_back(obj);
-			}
+			if (entity) ents.push_back(entity);
 		}
-	}
 
-	EntityTable* farents = ints.world->GetFarEnts();
-	if (farents)
-	{
 		for (int i = 0; i < ints.world->FarEntsSize(); i++)
 		{
 			Entity* entity = farents->GetEntityFromIndex(i);
-			if (!entity)
-				continue;
-
-			EntityLink* link = entity->link;
-			if (!link)
-				continue;
-
-			if (ints.world->GetlocalPlayer() == link)
-				continue;
-
-			Object* obj = link->obj;
-			if (!obj)
-				continue;
-
-			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "infantry"))
-			{
-				if (obj->IsDead())
-					continue;
-
-				players.push_back(obj);
-			}
-
-			if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "vehicle") || strstr(obj->GetObjectType()->type3->GetValue().c_str(), "air"))
-			{
-				if (obj->IsDead())
-					continue;
-
-				vehicles.push_back(obj);
-			}
+			if (entity) ents.push_back(entity);
 		}
 	}
+
+	for (auto ent : ents)
+	{
+		EntityLink* link = ent->link;
+		if (!link)
+			continue;
+
+		if (ints.world->GetlocalPlayer() == link)
+			continue;
+
+		Object* obj = link->obj;
+		if (!obj)
+			continue;
+
+		if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "infantry"))
+		{
+			if (obj->IsDead())
+				continue;
+
+			objs.push_back(new ObjectContainer(unit, obj));
+
+			continue;
+		}
+
+		if (strstr(obj->GetObjectType()->type3->GetValue().c_str(), "vehicle") || strstr(obj->GetObjectType()->type3->GetValue().c_str(), "air"))
+		{
+			if (obj->IsDead())
+				continue;
+
+			objs.push_back(new ObjectContainer(vehicle, obj));
+
+			continue;
+		}
+	}
+
+	ents.clear();
 }
 
 void Entities::ClearEntities()
 {
-	players.clear();
-	vehicles.clear();
+	objs.clear();
 }
 
-std::vector<Object*> Entities::GetPlayers()
+std::vector<ObjectContainer*> Entities::GetObjects()
 {
-	return players;
+	return objs;
 }
-
-std::vector<Object*> Entities::GetVehicles()
-{
-	return vehicles;
-}
-
 
 Entities entities;
