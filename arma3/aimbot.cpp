@@ -33,8 +33,6 @@ void Aimbot::Frame(D3D11Renderer* renderer, Object* player)
 				continue;
 
 			vs->origin = vs_player->head;
-
-			break;
 		}
 	}
 
