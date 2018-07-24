@@ -23,6 +23,7 @@ public:
 	char pad_11C0[128]; //0x11C0
 }; //Size: 0x1240
 
+class EntityLink;
 class Object
 {
 public:
@@ -39,6 +40,11 @@ public:
 	VisualState* GetRenderVisualState()
 	{
 		return *(VisualState**)(this + 0x190);
+	}
+
+	EntityLink* GetParent()
+	{
+		return *(EntityLink**)(this + 0x4D8);
 	}
 
 	bool IsDead()

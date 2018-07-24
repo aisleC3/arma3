@@ -21,6 +21,9 @@ void Aimbot::Frame(D3D11Renderer* renderer, Object* player)
 			if (!obj)
 				continue;
 
+			if (obj->GetParent() != ints.world->GetlocalPlayer())
+				continue;
+
 			VisualState* vs = obj->GetFutureVisualState();
 			if (!vs)
 				continue;
