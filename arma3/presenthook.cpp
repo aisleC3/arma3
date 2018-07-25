@@ -14,9 +14,6 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 
 	renderer->BeginScene();
 
-	//if (GetAsyncKeyState(VK_RBUTTON))
-	//world->GetlocalPlayer()->obj->GetFutureVisualState()->pos = vs->pos;
-
 	entities.StoreEntities();
 
 	for (auto container : entities.GetObjects())

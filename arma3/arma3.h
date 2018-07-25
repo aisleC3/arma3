@@ -15,6 +15,7 @@
 #include <memory>
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <cctype>
 #include <clocale>
 #include <algorithm>
@@ -43,9 +44,9 @@ public:
 #include "sdk\entity.h"
 #include "sdk\camera.h"
 #include "sdk\ui.h"
+#include "sdk\script.h"
 #include "sdk\world.h"
 #include "sdk\net.h"
-#include "sdk\script.h"
 
 // cheat
 #include "interfaces.h"

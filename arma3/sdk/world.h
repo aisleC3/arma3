@@ -13,6 +13,21 @@ public:
 		return *(Camera**)(this + 0x7E0);
 	}
 
+	ScriptVM* GetScriptVM()
+	{
+		return *(ScriptVM**)(this + 0x1408);
+	}
+
+	int GetThreadsNum()
+	{
+		return *(int*)(this + 0x1410);
+	}
+
+	int GetMaxThreadsNum()
+	{
+		return *(int*)(this + 0x1418);
+	}
+
 	EntityTable* GetBullets()
 	{
 		return *(EntityTable**)(this + 0x15E8);
