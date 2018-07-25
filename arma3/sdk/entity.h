@@ -42,6 +42,16 @@ public:
 		return *(VisualState**)(this + 0x190);
 	}
 
+	bool GetAllowDamage()
+	{
+		return *(bool*)(this + 0x1CC);
+	}
+
+	void SetAllowDamage(bool b)
+	{
+		*(bool*)(this + 0x1CC) = b;
+	}
+
 	EntityLink* GetParent()
 	{
 		return *(EntityLink**)(this + 0x4D8);
