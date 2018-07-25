@@ -242,5 +242,8 @@
     <ClInclude Include="misc.h">
       <Filter>Header Files\features</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\event.h">
+      <Filter>Header Files\sdk</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

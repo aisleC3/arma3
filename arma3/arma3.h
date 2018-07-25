@@ -41,9 +41,10 @@ public:
 
 // sdk
 #include "vmt.h"
+#include "sdk\ui.h"
+#include "sdk\event.h"
 #include "sdk\entity.h"
 #include "sdk\camera.h"
-#include "sdk\ui.h"
 #include "sdk\script.h"
 #include "sdk\world.h"
 #include "sdk\net.h"

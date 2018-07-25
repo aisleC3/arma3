@@ -32,8 +32,15 @@ long __stdcall Present(IDXGISwapChain* swapchain, UINT syncinterval, UINT flags)
 		if (type == unit)
 			aimbot.Frame(renderer, obj);
 
-		if ((type == unit) || (type == vehicle))
+		if (type == unit || type == vehicle)
 			misc.Frame(renderer, obj);
+	}
+
+	if(ints.world->GetlocalPlayer()) // test
+	{
+		Event event = ints.world->GetlocalPlayer()->obj->GetEventHandler()->GetEvent(0);
+		printf("Event: 0x%p\n", event.Container);
+		event.ModEventHandler("hint 'Hello World!';");
 	}
 
 	entities.ClearEntities();

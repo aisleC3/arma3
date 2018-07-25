@@ -52,6 +52,16 @@ public:
 		return *(bool*)(this + 0x504);
 	}
 
+	EventHandler* GetEventHandler()
+	{
+		return *(EventHandler**)(this + 0x608);
+	}
+
+	int GetNumEvents()
+	{
+		return *(int*)(this + 0x610);
+	}
+
 	bool GetNetID()
 	{
 		return *(int*)(this + 0xB94);
