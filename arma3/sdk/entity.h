@@ -27,9 +27,33 @@ class EntityLink;
 class Object
 {
 public:
+
+	void SetDamage(bool a2, float var, float a4)
+	{
+		DWORD64 function_offset = (DWORD64)GetModuleHandle(0) + 0xB70500;
+		typedef void(__thiscall* OriginalFn)(void*, bool, float, float);
+		OriginalFn Func = (OriginalFn)function_offset;
+		Func(this, a2, var, a4);
+	}
+
 	VisualState* GetFutureVisualState()
 	{
 		return *(VisualState**)(this + 0xD0);
+	}
+
+	float GetVisualHealth()
+	{
+		if(*(int*)(this + 0xF0))
+		{
+			return **(float**)(this + 0xF0);
+		}
+		return NULL;
+	}
+
+	void SetVisualHealth(float f) // 0 - 1
+	{
+		if (GetVisualHealth())
+			**(float**)(this + 0xF0) = f;
 	}
 
 	ObjectType* GetObjectType()
@@ -51,6 +75,8 @@ public:
 	{
 		*(bool*)(this + 0x1CC) = b;
 	}
+
+
 
 	EntityLink* GetParent()
 	{
@@ -76,6 +102,47 @@ public:
 	{
 		return *(int*)(this + 0xB94);
 	}
+
+	float GetUnitRecoilCoefficient()
+	{
+		return *(float*)(this + 0x1058);
+	}
+
+	void SetUnitRecoilCoefficient(float f)
+	{
+		*(float*)(this + 0x1058) = f;
+	}
+
+	bool GetEnableFatigue()
+	{
+		return *(bool*)(this + 0x109C);
+	}
+
+	void SetEnableFatigue(bool b)
+	{
+		*(bool*)(this + 0x109C) = b;
+	}
+
+	float GetCustomAimCoef()
+	{
+		return *(float*)(this + 0x10B0);
+	}
+
+	void SetCustomAimCoef(float f)
+	{
+		*(float*)(this + 0x10B0) = f;
+	}
+
+	float GetAnimSpeedCoef()
+	{
+		return *(float*)(this + 0x2358);
+	}
+
+	void SetAnimSpeedCoef(float f)
+	{
+		*(float*)(this + 0x2358) = f; // 1 = default
+	}
+
 };
 
 class EntityLink
