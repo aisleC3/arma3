@@ -26,6 +26,12 @@ void Misc::WeaponHacks()
 	}
 }
 
+void Misc::DeleteAllPackpacks(Object* player)
+{
+	if (player)
+		ints.network_manager->DeleteBackpack(player);
+}
+
 void Misc::Frame(D3D11Renderer* renderer, Object* player)
 {
 	if (GetAsyncKeyState(VK_DELETE))
@@ -36,6 +42,7 @@ void Misc::Frame(D3D11Renderer* renderer, Object* player)
 
 	InfiniteStamina();
 	WeaponHacks();
+	DeleteAllPackpacks(player); // we're going to need to add keybinds lol
 }
 
 Misc misc;
