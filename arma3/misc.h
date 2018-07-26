@@ -6,7 +6,7 @@ private:
 	void ImpulseAll(Object* player);
 	void InfiniteStamina();
 	void WeaponHacks();
-	void DeleteAllPackpacks(Object* player);
+	void DeleteAllBackpacks(Object* player);
 public:
 	bool Init();
 	void Frame(D3D11Renderer* renderer, Object* player);
