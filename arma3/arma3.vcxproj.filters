@@ -245,5 +245,8 @@
     <ClInclude Include="sdk\event.h">
       <Filter>Header Files\sdk</Filter>
     </ClInclude>
+    <ClInclude Include="sdk\weapon.h">
+      <Filter>Header Files\sdk</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
