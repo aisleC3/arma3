@@ -132,6 +132,9 @@
     <ClCompile Include="misc.cpp">
       <Filter>Source Files\features</Filter>
     </ClCompile>
+    <ClCompile Include="memory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arma3.h">
@@ -247,6 +250,9 @@
     </ClInclude>
     <ClInclude Include="sdk\weapon.h">
       <Filter>Header Files\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="memory.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

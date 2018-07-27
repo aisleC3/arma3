@@ -2,10 +2,15 @@
 
 // win
 #include <Windows.h>
+#include <winternl.h>
 #include <Xinput.h>
 #include <d3d11.h>
 #include <D3DX10math.h>
 #include <comdef.h>
+#include <minwindef.h>
+#include <winbase.h>
+#include <bemapiset.h>
+#include <intrin.h>
 
 #pragma comment(lib, "d3d11.lib")
 #pragma comment(lib, "d3dx10.lib")
@@ -19,6 +24,7 @@
 #include <cctype>
 #include <clocale>
 #include <algorithm>
+#include <sstream>
 
 // lib
 #include "dx11renderer\D3D11Renderer.h"
@@ -39,8 +45,11 @@ public:
 	inline float Dot(Vector a) { return x * a.x + y * a.y + z * a.z; }
 };
 
-// sdk
+// core
 #include "vmt.h"
+#include "memory.h"
+
+// sdk
 #include "sdk\ui.h"
 #include "sdk\event.h"
 #include "sdk\weapon.h"
