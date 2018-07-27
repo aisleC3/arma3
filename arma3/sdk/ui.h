@@ -2,18 +2,36 @@
 
 class ArmaString
 {
-private:
+public:
 	uint64_t m_referenceCount;
 	uint64_t m_length;
 	char m_pBuffer[1];
 
-public:
 	std::string GetValue()
 	{
-		if (!m_pBuffer || m_length < 1)
+		if (!this || !m_pBuffer || m_length < 1)
 			return "";
 
 		return (const char*)m_pBuffer;
+	}
+
+	static ArmaString* CreateArmaString(std::string text)
+	{
+		if (text.empty())
+			return nullptr;
+
+		const char* str = text.c_str();
+
+		int length = strlen(str);
+		ArmaString* armastring = (ArmaString*)malloc(length + 0xC);
+		if (!armastring)
+			return nullptr;
+
+		armastring->m_referenceCount = 1;
+		armastring->m_length = length;
+		memcpy(&armastring->m_pBuffer, str, length + 1);
+
+		return armastring;
 	}
 };
 

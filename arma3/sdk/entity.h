@@ -103,6 +103,11 @@ public:
 		return *(int*)(this + 0xB94);
 	}
 
+	WeaponTable* GetWeaponTable()
+	{
+		return *(WeaponTable**)(this + 0xCD8);
+	}
+
 	float GetUnitRecoilCoefficient()
 	{
 		return *(float*)(this + 0x1058);

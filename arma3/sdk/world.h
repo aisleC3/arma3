@@ -13,6 +13,11 @@ public:
 		return *(Camera**)(this + 0x7E0);
 	}
 
+	uintptr_t* GetGameDataNamespace()
+	{
+		return *(uintptr_t**)(this + 0x11F8);
+	}
+
 	ScriptVM* GetScriptVM()
 	{
 		return *(ScriptVM**)(this + 0x1408);

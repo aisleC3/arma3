@@ -43,6 +43,7 @@ public:
 #include "vmt.h"
 #include "sdk\ui.h"
 #include "sdk\event.h"
+#include "sdk\weapon.h"
 #include "sdk\entity.h"
 #include "sdk\camera.h"
 #include "sdk\script.h"

@@ -10,6 +10,10 @@ bool Interfaces::Init()
 	if (!network_manager)
 		return false;
 
+	game_state = (GameState*)((DWORD64)GetModuleHandle(0) + 0x257E5D0);
+	if (!game_state)
+		return false;
+
 	return true;
 }
 
