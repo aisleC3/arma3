@@ -1,6 +1,6 @@
 #include "arma3.h"
 
-HMODULE WINAPI Memory::GetModuleBaseAddress(LPCWSTR moduleName)
+HMODULE __stdcall Memory::GetModuleBaseAddress(std::string modulename)
 {
 	PEB* peb = nullptr;
 	LIST_ENTRY* listentry = nullptr;
@@ -16,7 +16,7 @@ HMODULE WINAPI Memory::GetModuleBaseAddress(LPCWSTR moduleName)
 
 	do
 	{
-		if (lstrcmpiW(datatablentry->FullDllName.Buffer, moduleName) == 0)
+		if (lstrcmpiW(datatablentry->FullDllName.Buffer, std::wstring(modulename.begin(), modulename.end()).c_str()) == 0)
 			return (HMODULE)datatablentry->Reserved2[0];
 
 		listentry = listentry->Flink;
@@ -70,7 +70,7 @@ std::string Memory::HexToBytes(std::string hex)
 
 ptr Memory::SigScan(const char* pattern, const char* module)
 {
-	HMODULE mod = GetModuleHandleA(module);
+	HMODULE mod = GetModuleBaseAddress(module);
 	MODULEINFO info;
 	GetModuleInformation(GetCurrentProcess(), mod, &info, sizeof(info));
 

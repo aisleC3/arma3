@@ -2,7 +2,7 @@
 
 bool Interfaces::Init()
 {
-	game_base = (DWORD64)Memory::GetModuleBaseAddress(L"arma3_x64.exe");
+	game_base = (DWORD64)Memory::GetModuleBaseAddress("arma3_x64.exe");
 	if (!game_base)
 		return false;
 

@@ -9,7 +9,7 @@ typedef unsigned long ulong;
 class Memory
 {
 public:
-	static HMODULE WINAPI GetModuleBaseAddress(LPCWSTR moduleName);
+	static HMODULE __stdcall GetModuleBaseAddress(std::string modulename);
 	PIMAGE_NT_HEADERS GetNTHeader(HMODULE hmModule);
 
 	std::string HexToBytes(std::string hex);
