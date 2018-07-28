@@ -1,154 +1,107 @@
 #include "arma3.h"
 
-/* This is probably the only thing I'll use C-Style casting for, you win this time kila */
-
 HMODULE WINAPI Memory::GetModuleBaseAddress(LPCWSTR moduleName)
 {
-	PEB *pPeb = NULL;
-	LIST_ENTRY *pListEntry = NULL;
-	LDR_DATA_TABLE_ENTRY *pLdrDataTableEntry = NULL;
+	PEB* peb = nullptr;
+	LIST_ENTRY* listentry = nullptr;
+	LDR_DATA_TABLE_ENTRY* datatablentry = nullptr;
 
-	pPeb = (PPEB)__readgsqword(0x60);
+	peb = (PPEB)__readgsqword(0x60);
 
-	if (pPeb == NULL)
-		return NULL;
+	if (!peb)
+		return nullptr;
 
-	pLdrDataTableEntry = (PLDR_DATA_TABLE_ENTRY)pPeb->Ldr->InMemoryOrderModuleList.Flink;
-	pListEntry = pPeb->Ldr->InMemoryOrderModuleList.Flink;
+	datatablentry = (PLDR_DATA_TABLE_ENTRY)peb->Ldr->InMemoryOrderModuleList.Flink;
+	listentry = peb->Ldr->InMemoryOrderModuleList.Flink;
 
 	do
 	{
-		if (lstrcmpiW(pLdrDataTableEntry->FullDllName.Buffer, moduleName) == 0)
-			return (HMODULE)pLdrDataTableEntry->Reserved2[0];
+		if (lstrcmpiW(datatablentry->FullDllName.Buffer, moduleName) == 0)
+			return (HMODULE)datatablentry->Reserved2[0];
 
-		pListEntry = pListEntry->Flink;
-		pLdrDataTableEntry = (PLDR_DATA_TABLE_ENTRY)(pListEntry->Flink);
+		listentry = listentry->Flink;
+		datatablentry = (PLDR_DATA_TABLE_ENTRY)(listentry->Flink);
 
-	} while (pListEntry != pPeb->Ldr->InMemoryOrderModuleList.Flink);
+	} while (listentry != peb->Ldr->InMemoryOrderModuleList.Flink);
+
+	return nullptr;
+}
+
+PIMAGE_NT_HEADERS Memory::GetNTHeader(HMODULE module)
+{
+	if (!module)
+		return nullptr;
+
+	IMAGE_DOS_HEADER* dosheader = reinterpret_cast<IMAGE_DOS_HEADER*>(module);
+
+	if (dosheader->e_magic != IMAGE_DOS_SIGNATURE)
+		return nullptr;
+
+	PIMAGE_NT_HEADERS ntheader = *(PIMAGE_NT_HEADERS*)(module + dosheader->e_lfanew);
+
+	if (ntheader->Signature != IMAGE_NT_SIGNATURE)
+		return nullptr;
+
+	return ntheader;
+}
+
+std::string Memory::HexToBytes(std::string hex)
+{
+	std::string bytes;
+
+	hex.erase(std::remove_if(hex.begin(), hex.end(), isspace), hex.end());
+
+	for (uint i = 0; i < hex.length(); i += 2)
+	{
+		if ((uchar)hex[i] == '?')
+		{
+			bytes += '?';
+			i -= 1;
+
+			continue;
+		}
+
+		uchar byte = (uchar)std::strtol(hex.substr(i, 2).c_str(), nullptr, 16);
+		bytes += byte;
+	}
+
+	return bytes;
+}
+
+ptr Memory::SigScan(const char* pattern, const char* module)
+{
+	HMODULE mod = GetModuleHandleA(module);
+	MODULEINFO info;
+	GetModuleInformation(GetCurrentProcess(), mod, &info, sizeof(info));
+
+	uchar* base = (uchar*)mod;
+
+	std::string signature = HexToBytes(pattern);
+
+	uchar first = (uchar)signature.at(0);
+	uchar* end = (base + info.SizeOfImage) - signature.length();
+
+	for (; base < end; ++base)
+	{
+		if (*base != first)
+			continue;
+
+		uchar* bytes = base;
+		uchar* sig = (uchar*)signature.c_str();
+
+		for (; *sig; ++sig, ++bytes)
+		{
+			if (*sig == '?')
+				continue;
+
+			if (*bytes != *sig)
+				goto end;
+		}
+
+		return (ptr)base;
+
+	end:;
+	}
 
 	return NULL;
 }
-
-PIMAGE_NT_HEADERS Memory::GetNTHeader(HMODULE hmModule)
-{
-	if (hmModule == nullptr)
-		return nullptr;
-
-	IMAGE_DOS_HEADER* pDosHeader = reinterpret_cast<IMAGE_DOS_HEADER*>(hmModule);
-
-	if (pDosHeader->e_magic != IMAGE_DOS_SIGNATURE)
-		return nullptr;
-
-	PIMAGE_NT_HEADERS pNtHeader = make_ptr< PIMAGE_NT_HEADERS >(hmModule, pDosHeader->e_lfanew);
-
-	if (pNtHeader->Signature != IMAGE_NT_SIGNATURE)
-		return nullptr;
-
-	return pNtHeader;
-}
-
-
-//Example Usage
-/*
-offset_DrawHud = FindPattern::Find("40 55 57 48 8D 6C 24 ? 48 81 EC ? ? ? ? 48 8B 01");//Function Example
-
-DWORD64 dwUEngine = FindPattern::Find("48 8B 05 ? ? ? ? 48 8B 40 30 C3");//Pointer Example
-unreal_UEngine = dwUEngine + *(DWORD*)(dwUEngine + 3) + 7;
-
-DWORD64 dwGetBoneMatrix = FindPattern::Find("E8 ? ? ? ? F3 0F 10 57 ? 48 8D 54 24 ? 48 8D 4C 24 ? E8 ? ? ? ? F3 0F 10 57 ?");//Call Example
-unreal_GetBoneMatrix = dwGetBoneMatrix + *(DWORD*)(dwGetBoneMatrix + 1) + 5;*/
-
-
-//Get Module Size and Base
-//dwImageBase = (DWORD64)OFFSETS::GetModuleBaseAddress(L"YourExeName.exe");
-
-/*
-PIMAGE_NT_HEADERS nthdr = OFFSETS::GetNTHeader(OFFSETS::GetModuleBaseAddress(L"YourExeName.exe"));
-if (nthdr == nullptr)
-return false;
-
-dwImageSize = (DWORD64)nthdr->OptionalHeader.SizeOfImage;*/
-
-
-//FindPattern Functions
-struct GetPatternByte
-{
-	GetPatternByte() : ignore(true)
-	{
-	}
-
-	GetPatternByte(std::string byteString, bool ignoreThis = false) {
-		data = StringToUint8(byteString);
-		ignore = ignoreThis;
-	}
-
-	bool ignore;
-	UINT8 data;
-
-private:
-	UINT8 StringToUint8(std::string str)
-	{
-		std::istringstream iss(str);
-
-		UINT32 ret;
-
-		if (iss >> std::hex >> ret)
-		{
-			return (UINT8)ret;
-		}
-
-		return 0;
-	}
-};
-
-struct FindPattern
-{
-	static DWORD64 Find(DWORD64 dwStart, DWORD64 dwLength, std::string s) {
-		std::vector<GetPatternByte> p;
-		std::istringstream iss(s);
-		std::string w;
-
-		while (iss >> w)
-		{
-			if (w.data()[0] == '?')
-			{
-				p.push_back(GetPatternByte());
-			}
-			else if (w.length() == 2 && isxdigit(w.data()[0]) && isxdigit(w.data()[1])) { // Hex
-				p.push_back(GetPatternByte(w));
-			}
-			else
-			{
-				return NULL;
-			}
-		}
-
-		for (DWORD64 i = 0; i < dwLength; i++)
-		{
-			UINT8* lpCurrentByte = (UINT8*)(dwStart + i);
-
-			bool found = true;
-
-			for (size_t ps = 0; ps < p.size(); ps++)
-			{
-				if (p[ps].ignore == false && lpCurrentByte[ps] != p[ps].data) {
-					found = false;
-					break;
-				}
-			}
-
-			if (found)
-			{
-				return (DWORD64)lpCurrentByte;
-			}
-		}
-
-		return NULL;
-	}
-/*
-
-	static DWORD64 Find(std::string s)
-	{
-		return Find((DWORD64)dwImageBase, (DWORD64)dwImageSize, s);
-	}*/
-};

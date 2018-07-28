@@ -51,6 +51,7 @@
     <ClCompile Include="esp.cpp" />
     <ClCompile Include="interfaces.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="memory.cpp" />
     <ClCompile Include="misc.cpp" />
     <ClCompile Include="presenthook.cpp" />
   </ItemGroup>
@@ -80,15 +81,18 @@
     <ClInclude Include="esp.h" />
     <ClInclude Include="hook.h" />
     <ClInclude Include="interfaces.h" />
+    <ClInclude Include="memory.h" />
     <ClInclude Include="misc.h" />
     <ClInclude Include="presenthook.h" />
     <ClInclude Include="arma3.h" />
     <ClInclude Include="sdk\camera.h" />
     <ClInclude Include="sdk\entity.h" />
-    <ClInclude Include="sdk\gun.h" />
+    <ClInclude Include="sdk\event.h" />
     <ClInclude Include="sdk\net.h" />
     <ClInclude Include="sdk\script.h" />
     <ClInclude Include="sdk\ui.h" />
+    <ClInclude Include="sdk\vector.h" />
+    <ClInclude Include="sdk\weapon.h" />
     <ClInclude Include="sdk\world.h" />
     <ClInclude Include="vmt.h" />
   </ItemGroup>

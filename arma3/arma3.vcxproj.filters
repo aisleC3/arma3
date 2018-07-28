@@ -227,9 +227,6 @@
     <ClInclude Include="sdk\camera.h">
       <Filter>Header Files\sdk</Filter>
     </ClInclude>
-    <ClInclude Include="sdk\gun.h">
-      <Filter>Header Files\sdk</Filter>
-    </ClInclude>
     <ClInclude Include="interfaces.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -249,6 +246,9 @@
       <Filter>Header Files\sdk</Filter>
     </ClInclude>
     <ClInclude Include="sdk\weapon.h">
+      <Filter>Header Files\sdk</Filter>
+    </ClInclude>
+    <ClInclude Include="sdk\vector.h">
       <Filter>Header Files\sdk</Filter>
     </ClInclude>
     <ClInclude Include="memory.h">
