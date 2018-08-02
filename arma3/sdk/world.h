@@ -45,26 +45,26 @@ public:
 
 	EntityTable* GetNearEnts()
 	{
-		return *(EntityTable**)(this + 0x16B8);
+		return *(EntityTable**)(this + 0x16B0);
 	}
 
 	int NearEntsSize()
 	{
-		return *(int*)(this + 0x16C0);
+		return *(int*)(this + 0x16B8);
 	}
 
 	EntityTable* GetFarEnts()
 	{
-		return *(EntityTable**)(this + 0x1780);
+		return *(EntityTable**)(this + 0x1778);
 	}
 
 	int FarEntsSize()
 	{
-		return *(int*)(this + 0x1788);
+		return *(int*)(this + 0x1780);
 	}
 
 	EntityLink* GetlocalPlayer()
 	{
-		return *(EntityLink**)(this + 0x26A8);
+		return *(EntityLink**)(this + 0x26A0);
 	}
 };

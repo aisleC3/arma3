@@ -27,9 +27,9 @@ public:
 		return(getvfunc<OriginalFn>(this, 261))(this, obj);
 	}
 
-	void GetOut(Object* obj, __int64 a3, __int64 a4, bool a5, bool a6)
+	void GetOut(Object* obj, Object* vehicle, Object* turret, bool eject, bool parachute)
 	{
-		typedef void(__thiscall* OriginalFn)(void*, Object*, __int64, __int64, bool, bool);
-		return(getvfunc<OriginalFn>(this, 168))(this, obj, a3, a4, a5, a6);
+		typedef void(__thiscall* OriginalFn)(void*, Object*, Object*, Object*, bool, bool);
+		return(getvfunc<OriginalFn>(this, 168))(this, obj, vehicle, turret, eject, parachute);
 	}
 };

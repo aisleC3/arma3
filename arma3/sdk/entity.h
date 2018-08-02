@@ -108,6 +108,23 @@ public:
 		return *(WeaponTable**)(this + 0xCD8);
 	}
 
+	Object* GetDriver()
+	{
+		return *(Object**)(this + 0xDB8);
+	}
+
+	Object* GetGunner(int idx)
+	{
+		ptr* list = *(ptr**)(this + 0xF28);
+		ptr* turret = *(ptr**)(list + 0x8 * idx);
+		return *(Object**)(turret + 0x1D8);
+	}
+
+	int GetMaxGunners()
+	{
+		return *(int*)(this + 0xF30);
+	}
+
 	float GetUnitRecoilCoefficient()
 	{
 		return *(float*)(this + 0x1058);
