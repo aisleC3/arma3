@@ -6,11 +6,11 @@ bool Interfaces::Init()
 	if (!game_base)
 		return false;
 
-	world = *(World**)(game_base + 0x2553F48);
+	world = *(World**)(game_base + 0x25572B0);
 	if (!world)
 		return false;
 
-	network_manager = *(NetworkManager**)(game_base + 0x2512170);
+	network_manager = *(NetworkManager**)(game_base + 0x25154F0);
 	if (!network_manager)
 		return false;
 

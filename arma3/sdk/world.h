@@ -5,42 +5,42 @@ class World
 public:
 	EngineDD11* GetEngine()
 	{
-		return *(EngineDD11**)(this + 0x470);
+		return *(EngineDD11**)(this + 0x458);
 	}
 
 	Camera* GetCamera()
 	{
-		return *(Camera**)(this + 0x7E0);
+		return *(Camera**)(this + 0x7D8);
 	}
 
 	uintptr_t* GetGameDataNamespace()
 	{
-		return *(uintptr_t**)(this + 0x11F8);
+		return *(uintptr_t**)(this + 0x11F0);
 	}
 
 	ScriptVM* GetScriptVM()
 	{
-		return *(ScriptVM**)(this + 0x1408);
+		return *(ScriptVM**)(this + 0x1400);
 	}
 
 	int GetThreadsNum()
 	{
-		return *(int*)(this + 0x1410);
+		return *(int*)(this + 0x1408);
 	}
 
 	int GetMaxThreadsNum()
 	{
-		return *(int*)(this + 0x1418);
+		return *(int*)(this + 0x1410);
 	}
 
 	EntityTable* GetBullets()
 	{
-		return *(EntityTable**)(this + 0x15E8);
+		return *(EntityTable**)(this + 0x15E0);
 	}
 
 	int BulletsSize()
 	{
-		return *(int*)(this + 0x15F0);
+		return *(int*)(this + 0x15E8);
 	}
 
 	EntityTable* GetNearEnts()

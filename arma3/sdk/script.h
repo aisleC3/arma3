@@ -6,14 +6,46 @@ struct EvalContext
 	bool _undefinedIsNil;
 };
 
-class GameState
+class StringWrapper
 {
+	ArmaString* string;
 public:
-	void Execute(const char* expression, uintptr_t* globals)
+	StringWrapper(std::string str)
 	{
-
+		string = ArmaString::CreateArmaString(str);
 	}
 };
+
+class GameState
+{
+private:
+	
+	DWORD64 GetExecuteAddy()
+	{
+		return DWORD64(GetModuleHandle(0)) + 0x12EF9D0;
+	}
+	/* 4C 89 4C 24 ? 55 56 57 41 54 41 55 41 56 41 57 48 8D AC 24 ? ? ? ? 48 81 EC ? ? ? ? 4C 8B A5 ? ? ? ? 4D 8B E8 48 8B F2 4C 8B F1 4D 85 E4 75 31 44 38 A1 ? ? ? ? 74 09 4C 8D 25 ? ? ? ?  */
+public:
+/*
+	void Execute(const char* expression)
+	{
+		using fnGameStateExecute = void(__thiscall* )(void*, StringWrapper*, DWORD64);
+		fnGameStateExecute GameStateExecute = fnGameStateExecute(GetExecuteAddy());
+		StringWrapper* src = new StringWrapper(expression);
+		DWORD64 context = (DWORD64)GetModuleHandle(0) + 0x2231F20;
+		GameStateExecute(this, src, context);
+		// ctx = base + 0x2231F20;
+	}*/
+
+	void Execute(const char* expression, EvalContext* ctx, uintptr_t* globals)
+	{
+		typedef void(__thiscall *tFunction)(GameState*, const char*, EvalContext*, uintptr_t*);
+		tFunction oFunction = (tFunction)(GetModuleHandle(0) + 0x12EF9D0);
+		oFunction(this, expression, ctx, globals);
+	}
+};
+
+extern EvalContext* GEvalContext;
 
 class ScriptThread
 {
