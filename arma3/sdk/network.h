@@ -1,5 +1,29 @@
 #pragma once
 
+class NetworkClient
+{
+public:
+	int GetID()
+	{
+		return *(int*)(this + 0x8);
+	}
+
+	ArmaString* GetName()
+	{
+		return *(ArmaString**)(this + 0x120);
+	}
+};
+
+class ScoreBoard
+{
+public:
+	NetworkClient* GetClient(int idx)
+	{
+		ptr* first_client = *(ptr**)(this + 0x38);
+		return reinterpret_cast<NetworkClient*>(first_client + 0x280 /*Size needs to be confirmed*/ * idx);
+	}
+};
+
 class NetworkManager
 {
 public:
@@ -31,5 +55,10 @@ public:
 	{
 		typedef void(__thiscall* OriginalFn)(void*, Object*, Object*, Object*, bool, bool);
 		return(getvfunc<OriginalFn>(this, 168))(this, obj, vehicle, turret, eject, parachute);
+	}
+
+	ScoreBoard* GetScoreboard()
+	{
+		return *(ScoreBoard**)(this + 0x48);
 	}
 };

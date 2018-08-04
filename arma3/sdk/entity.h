@@ -76,7 +76,10 @@ public:
 		*(bool*)(this + 0x1CC) = b;
 	}
 
-
+	int GetSideID()
+	{
+		return *(int*)(this + 0x340);
+	}
 
 	EntityLink* GetParent()
 	{

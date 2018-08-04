@@ -42,7 +42,7 @@
 #include "sdk\camera.h"
 #include "sdk\script.h"
 #include "sdk\world.h"
-#include "sdk\net.h"
+#include "sdk\network.h"
 
 // cheat
 #include "interfaces.h"
