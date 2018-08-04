@@ -65,6 +65,6 @@ public:
 
 	EntityLink* GetlocalPlayer()
 	{
-		return *(EntityLink**)(this + 0x26A0);
+		return *(EntityLink**)(this + 0x26D8);
 	}
 };
