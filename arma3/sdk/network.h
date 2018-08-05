@@ -17,10 +17,15 @@ public:
 class ScoreBoard
 {
 public:
-	NetworkClient* GetClient(int idx)
+	NetworkClient* GetClient(int ID)
 	{
 		ptr* first_client = *(ptr**)(this + 0x38);
-		return reinterpret_cast<NetworkClient*>(first_client + 0x280 /*Size needs to be confirmed*/ * idx);
+		for(int i = 0; i < 128; i++)
+		{
+			NetworkClient* client = (NetworkClient*)(first_client + i * 0x280);
+			if (client->GetID() == ID)
+				return client;
+		}
 	}
 };
 
